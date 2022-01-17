@@ -1,26 +1,22 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { IconContext } from "react-icons";
+import iconsConfig from "./config/icons";
+import Button from "./components/Button";
+import { IoMdArrowRoundForward, IoMdArrowRoundBack } from "react-icons/io";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>This is a heading</h1>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Ok no p
-        </a>
-      </header>
-    </div>
+    <IconContext.Provider value={iconsConfig}>
+      <div style={{ background: "tomato" }}>
+        <Button>
+          <IoMdArrowRoundBack />
+          Back
+        </Button>
+        <Button primary>
+          Next <IoMdArrowRoundForward />
+        </Button>
+      </div>
+    </IconContext.Provider>
   );
 }
 
