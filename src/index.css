@@ -1,3 +1,11 @@
+@import-normalize; /* bring in normalize.css styles */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap");
 :root {
   --color-gray: #c4c4c4;
