@@ -2,10 +2,16 @@ import React from "react";
 import { IconContext } from "react-icons";
 import iconsConfig from "./config/icons";
 import Button from "./components/Button";
-import Card from "./components/Card";
+import Card, { SelectableCardGroup } from "./components/Card";
 import { IoMdArrowRoundForward, IoMdArrowRoundBack } from "react-icons/io";
+import { InputName } from "./components/Card/SelectableCardGroup/SelectableCardGroup";
 
 function App() {
+  const [selectedOption, setSelectedOption] = React.useState("");
+  const handleSelectionChange = (inputName: InputName) => {
+    setSelectedOption(inputName);
+  };
+
   return (
     <IconContext.Provider value={iconsConfig}>
       <div
@@ -27,6 +33,25 @@ function App() {
             </Button>
           </Card>
         </div>
+        <div style={{ flex: 1 }}>
+          <Card>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <h1>Heading</h1>
+            </div>
+            <h2>Then some image here shaa</h2>
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Button primary>
+                Next <IoMdArrowRoundForward />
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </div>
+      <div style={{ flex: 1 }}>
+        <SelectableCardGroup
+          inputs={["apply", "renew"]}
+          onSelectionChange={handleSelectionChange}
+        />
       </div>
     </IconContext.Provider>
   );

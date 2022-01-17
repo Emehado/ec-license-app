@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  justify-content: flex-end;
+}
+.radio {
+  height: 25px;
+  width: 25px;
+  border-radius: 13px;
+  border: 1px solid var(--color-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-light-bg);
+}
+
+.radio:hover {
+  cursor: pointer;
+}
+
+.radio__selected {
+  height: 70%;
+  width: 70%;
+  border-radius: 15px;
+  background: var(--color-primary);
+}
