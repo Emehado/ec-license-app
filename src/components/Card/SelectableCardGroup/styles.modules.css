@@ -1,0 +1,14 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .root {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+}
