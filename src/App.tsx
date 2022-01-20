@@ -1,22 +1,32 @@
 import React from "react";
 import { IconContext } from "react-icons";
 import iconsConfig from "./config/icons";
-import Button from "./components/Button";
-import Card, { SelectableCardGroup } from "./components/Card";
-import { IoMdArrowRoundForward, IoMdArrowRoundBack } from "react-icons/io";
-import { InputName } from "./components/Card/SelectableCardGroup/SelectableCardGroup";
-import Input from "./components/Input";
+import styled, { ThemeProvider } from "styled-components";
+import theme from "./config/theme";
+import Stepper, { Step } from "./components/Stepper";
 
 function App() {
-  const [selectedOption, setSelectedOption] = React.useState("");
-  const handleSelectionChange = (inputName: InputName) => {
-    setSelectedOption(inputName);
-  };
-
+  const steps = [
+    { id: "1", label: "1" },
+    { id: "2", label: "2" },
+    { id: "3", label: "3" },
+  ];
+  const [activeStep, setActiveStep] = React.useState("3");
   return (
-    <IconContext.Provider value={iconsConfig}>
-      <Input placeholder="Enter your name" />
-    </IconContext.Provider>
+    <ThemeProvider theme={theme}>
+      <IconContext.Provider value={iconsConfig}>
+        <Stepper direction="horizontal">
+          {steps.map((step) => (
+            <Step
+              active={activeStep === step.id}
+              completed={activeStep >= step.id}
+            >
+              {step.label}
+            </Step>
+          ))}
+        </Stepper>
+      </IconContext.Provider>
+    </ThemeProvider>
   );
 }
 
