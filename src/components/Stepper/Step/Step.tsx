@@ -5,6 +5,7 @@ interface StyledStepProps {
   children: React.ReactNode;
   completed?: boolean;
   active?: boolean;
+  onStepClick?: () => void;
 }
 const StyledStepContainer = styled.div<StyledStepProps>`
   display: flex;
@@ -27,7 +28,7 @@ const StyledStep = styled.div<StyledStepProps>`
           height: 5rem;
           width: 5rem;
         `}
-  transition: 0.5s;
+  transition: 0.2s;
   border-radius: 40px;
   padding: 1px;
   background-color: transparent;
@@ -46,6 +47,7 @@ const StyledStep = styled.div<StyledStepProps>`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
     background-color: ${(props) =>
       props.completed ? props.theme.colors.primary : props.theme.colors.gray};
     color: ${(props) => props.theme.colors.light};
@@ -65,6 +67,7 @@ const Connector = styled.div.attrs((props: StyledStepProps) => ({
   className: "connector",
   ...props,
 }))`
+  transition: 0.2s;
   ${(props) =>
     props.active || props.completed
       ? css`
@@ -75,11 +78,18 @@ const Connector = styled.div.attrs((props: StyledStepProps) => ({
         `}
 `;
 
-const Step: React.FC<StyledStepProps> = ({ active, completed, children }) => {
+const Step: React.FC<StyledStepProps> = ({
+  active,
+  completed,
+  children,
+  onStepClick,
+}) => {
   return (
     <StyledStepContainer active={active} className="stepContainer">
       <StyledStep active={active} completed={completed}>
-        <div className="step">{children}</div>
+        <div className="step" onClick={onStepClick}>
+          {children}
+        </div>
       </StyledStep>
       <Connector active={active} completed={completed} />
     </StyledStepContainer>

@@ -8,7 +8,6 @@ interface Props {
 const StyledStepper = styled.div.attrs((props: Props) => ({
   direction: props.direction || "horizontal",
 }))`
-  background: tomato;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,7 +17,7 @@ const StyledStepper = styled.div.attrs((props: Props) => ({
     ${(props) =>
       props.direction === "horizontal"
         ? css`
-            width: 10rem;
+            width: 5rem;
             height: 1px;
           `
         : css`
