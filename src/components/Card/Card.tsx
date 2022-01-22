@@ -1,13 +1,10 @@
 import React from "react";
-import "./Card.modules.css";
+import styled from "styled-components";
 
-interface CardProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-const Card: React.FC<CardProps> = ({ children, className }) => {
-  return <div className={`card ${className}`}>{children}</div>;
-};
-
-export default Card;
+const StyledCard = styled.div`
+  border: 1px solid var(--color-gray);
+  border-radius: 5px;
+  background-color: var(--color-light);
+  padding: 3rem;
+`;
+export default StyledCard;
