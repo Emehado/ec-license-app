@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const ngrok = require("ngrok");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,4 +12,8 @@ app.get("*", (req, res) => {
 });
 app.listen(port, () => {
   console.log(`Server is up on port ${port}!`);
+  (async function () {
+    const url = await ngrok.connect(port);
+    console.log(url);
+  })();
 });
