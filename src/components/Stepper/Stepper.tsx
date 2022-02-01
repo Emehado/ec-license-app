@@ -11,13 +11,14 @@ const StyledStepper = styled.div.attrs((props: Props) => ({
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
   flex-direction: ${(props) =>
     props.direction === "horizontal" ? "row" : "column"};
   .connector {
     ${(props) =>
       props.direction === "horizontal"
         ? css`
-            width: 5rem;
+            width: 4rem;
             height: 1px;
           `
         : css`

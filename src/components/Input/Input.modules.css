@@ -1,17 +1,1 @@
-.input {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 2rem 3rem;
-  outline: 0;
-  color: var(--color-headings);
-  font-size: 2rem;
-}
 
-::placeholder {
-  color: var(--color-body-darker);
-}
-@media (min-width: 1024px) {
-  .input {
-    font-size: 1.5rem;
-  }
-}

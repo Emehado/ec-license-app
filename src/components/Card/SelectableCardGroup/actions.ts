@@ -1,14 +1,14 @@
 import * as React from "react";
-import { InputName } from "./SelectableCardGroup";
+import { ISelectableCardGroupInput } from "./SelectableCardGroup";
 interface ActionHooks {
-  onSelectionChange: (inputName: InputName) => void;
+  onSelectionChange: (input: ISelectableCardGroupInput) => void;
 }
 
 export default function useActions({ onSelectionChange }: ActionHooks) {
   const [selected, setSelected] = React.useState("");
-  const handleToggleSelection = (inputName: InputName) => {
-    setSelected(inputName);
-    onSelectionChange(inputName);
+  const handleToggleSelection = (input: ISelectableCardGroupInput) => {
+    setSelected(input.name);
+    onSelectionChange(input);
   };
   return { selected, handleToggleSelection };
 }

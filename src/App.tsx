@@ -1,32 +1,39 @@
 import React from "react";
+import RootStoreProvider from "./context/store";
 import { IconContext } from "react-icons";
 import iconsConfig from "./config/icons";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
+import { Toaster } from "react-hot-toast";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+} from "react-router-dom";
+
 import theme from "./config/theme";
-import Stepper, { Step } from "./components/Stepper";
+import NotFound from "./screens/NotFound";
+import wiringRoute from "./routes/wiringRoute";
+import licenseApplicationRoute from "./routes/licenseApplicationRoute";
 
 function App() {
-  const steps = [
-    { id: "1", label: "1" },
-    { id: "2", label: "2" },
-    { id: "3", label: "3" },
-  ];
-  const [activeStep, setActiveStep] = React.useState("3");
   return (
-    <ThemeProvider theme={theme}>
-      <IconContext.Provider value={iconsConfig}>
-        <Stepper direction="horizontal">
-          {steps.map((step) => (
-            <Step
-              active={activeStep === step.id}
-              completed={activeStep >= step.id}
-            >
-              {step.label}
-            </Step>
-          ))}
-        </Stepper>
-      </IconContext.Provider>
-    </ThemeProvider>
+    <Router>
+      <RootStoreProvider>
+        <ThemeProvider theme={theme}>
+          <IconContext.Provider value={iconsConfig}>
+            <Toaster />
+            <Routes>
+              <Route path="/" element={<Outlet />}>
+                {licenseApplicationRoute()}
+                {wiringRoute()}
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </IconContext.Provider>
+        </ThemeProvider>
+      </RootStoreProvider>
+    </Router>
   );
 }
 

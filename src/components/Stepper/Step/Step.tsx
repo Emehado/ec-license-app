@@ -23,13 +23,21 @@ const StyledStep = styled.div<StyledStepProps>`
       ? css`
           height: 7rem;
           width: 7rem;
+          @media screen and (min-width: 1024px) {
+            height: 10rem;
+            width: 10rem;
+          }
         `
       : css`
           height: 5rem;
           width: 5rem;
+          @media screen and (min-width: 1024px) {
+            height: 7rem;
+            width: 7rem;
+          }
         `}
-  transition: 0.2s;
-  border-radius: 40px;
+  transition: 0.5s;
+  border-radius: 50px;
   padding: 1px;
   background-color: transparent;
   display: flex;
@@ -38,11 +46,15 @@ const StyledStep = styled.div<StyledStepProps>`
   ${(props) =>
     props.active &&
     css`
-      border: 2px solid ${props.theme.colors.primary};
+      border: 3px solid ${props.theme.colors.primary};
     `}
   .step {
     height: 5rem;
     width: 5rem;
+    @media screen and (min-width: 1024px) {
+      height: 7rem;
+      width: 7rem;
+    }
     border-radius: 60px;
     display: flex;
     justify-content: center;

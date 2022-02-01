@@ -1,5 +1,4 @@
 import React from "react";
-// import {} from "mobx";
 import StepStore from "./step";
 
 class RootStore {

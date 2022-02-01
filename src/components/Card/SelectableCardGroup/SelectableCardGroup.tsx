@@ -3,25 +3,32 @@ import { SelectableCard } from "..";
 import useActions from "./actions";
 import "./styles.modules.css";
 
-export type InputName = string;
+export interface ISelectableCardGroupInput {
+  name: string;
+  [x: string]: any;
+}
 interface SelectableCardGroupProps {
-  inputs: InputName[];
-  onSelectionChange: (input: InputName) => void;
+  inputs: any[];
+  onSelectionChange: (input: ISelectableCardGroupInput) => void;
+  renderItem: (input: string, index: number) => React.ReactNode;
 }
 const SelectableCardGroup: React.FC<SelectableCardGroupProps> = ({
   inputs,
   onSelectionChange,
+  renderItem,
 }) => {
   const { selected, handleToggleSelection } = useActions({ onSelectionChange });
 
   return (
     <div className="root">
-      {inputs.map((input) => (
+      {inputs.map((input, index) => (
         <SelectableCard
-          selected={selected === input}
+          disabled={input.disabled}
+          key={input.name}
+          selected={selected === input.name}
           onSelected={() => handleToggleSelection(input)}
         >
-          <h1>my child</h1>
+          <div>{renderItem(input, index)}</div>
         </SelectableCard>
       ))}
     </div>
