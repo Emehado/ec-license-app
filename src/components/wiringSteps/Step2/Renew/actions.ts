@@ -1,11 +1,11 @@
 import * as React from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { ISelectOption } from "../../../types";
-import useRootStore from "../../../hooks/useRootStore";
-import api from "../../../api";
-import ILicenseFormDetails from "../../../types/ILicenseFormDetails";
-import useCurrentStepUpdater from "../../../hooks/useCurrentStepUpdater";
+import { ISelectOption } from "../../../../types";
+import useRootStore from "../../../../hooks/useRootStore";
+import api from "../../../../api";
+import ILicenseFormDetails from "../../../../types/ILicenseFormDetails";
+import useCurrentStepUpdater from "../../../../hooks/useCurrentStepUpdater";
 
 export default function useActions() {
   useCurrentStepUpdater(1);

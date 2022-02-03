@@ -18,7 +18,7 @@ const StyledRenderItem = styled.div`
 `;
 
 const Step1 = () => {
-  const { options, handleSelectionChange } = useActions();
+  const { options, handleSelectionChange, handleStepChange } = useActions();
   const renderItem = (input: any, index: number) => (
     <StyledRenderItem>
       <img src={input.image} alt={`${input.name} icon`} />
@@ -38,7 +38,7 @@ const Step1 = () => {
         inputs={options}
         onSelectionChange={handleSelectionChange}
       />
-      <BottomNavigation hasMargin />
+      <BottomNavigation hasMargin onStepChange={handleStepChange} />
     </div>
   );
 };

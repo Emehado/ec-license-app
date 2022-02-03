@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { ISelectOption } from "../../types";
+import StyledLabel from "../Label/Label";
 
 interface SelectProps {
   name: string;
   options: ISelectOption[];
   onChange: (e: any) => void;
+  label?: string;
   defaultLabel?: string;
   [x: string]: any;
 }
@@ -27,6 +29,7 @@ const StyledSelect = styled.select<StyledSelectProps>`
 
 const Select: React.FC<SelectProps> = ({
   name,
+  label,
   options,
   onChange,
   defaultLabel,
@@ -38,14 +41,17 @@ const Select: React.FC<SelectProps> = ({
     onChange(e);
   };
   return (
-    <StyledSelect name={name} value={value} onChange={handleChange}>
-      <option value="">--{defaultLabel || "Choose an option"}--</option>
-      {options.map((option) => (
-        <option key={option.label} value={option.value}>
-          {option.label}
-        </option>
-      ))}
-    </StyledSelect>
+    <div>
+      <StyledLabel>{label}</StyledLabel>
+      <StyledSelect name={name} value={value} onChange={handleChange}>
+        <option value="">--{defaultLabel || "Choose an option"}--</option>
+        {options.map((option) => (
+          <option key={option.label} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </StyledSelect>
+    </div>
   );
 };
 

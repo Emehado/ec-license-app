@@ -14,7 +14,7 @@ export default function useActions() {
     const data = {
       register: stepStore.billingDetails.registerType,
       name: stepStore.billingDetails.name,
-      phone: "0543158880", //Static field to be replaced with EC values
+      phone: "0208084342", //Static field to be replaced with EC values
       email: "emehado@yahoo.com", //Static field to be replaced with EC values
       years: stepStore.billingDetails.years,
       license: stepStore.billingDetails.license,
@@ -31,10 +31,10 @@ export default function useActions() {
     setTimeout(() => {
       //@ts-ignore
       window.location = response.data.checkout_url;
-    }, 6000);
+    }, 3000);
   };
 
-  const handleStepChange = (direction: number) => {
+  const handleStepChange = async (direction: number) => {
     const newStepId = stepStore.currentStep?.id! + direction;
 
     if (direction > 0) {
@@ -46,11 +46,20 @@ export default function useActions() {
           reject(error);
         }
       });
-      toast.promise(myPromise, {
-        loading: "Loading...",
-        success: "Success",
-        error: (error) => error.message,
-      });
+      await toast.promise(
+        myPromise,
+        {
+          loading: "Loading...",
+          success: "You'll be redirected soon!",
+          error: (error) => error.message,
+        },
+        {
+          style: { minWidth: 250 },
+          success: {
+            duration: 3000,
+          },
+        }
+      );
       return;
     }
     stepStore.setCurrentStep(stepStore.steps[newStepId - 1]);

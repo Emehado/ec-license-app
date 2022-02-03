@@ -26,7 +26,7 @@ const wiringRoute = () => {
     <Route path="/wiring" element={<StepLayout steps={steps} />}>
       <Route index element={<Step1 />} />
       <Route path="1" element={<Step1 />} />
-      <Route path="2" element={<ProtectedStep step={<Step2 />} />} />
+      <Route path="2/*" element={<ProtectedStep step={<Step2 />} />} />
       <Route path="3" element={<ProtectedStep step={<Step3 />} />} />
       <Route path="4" element={<ProtectedStep step={<Step4 />} />} />
     </Route>
