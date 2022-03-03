@@ -24,15 +24,14 @@ const StyledFormRadioGroup = styled.div<StyledFormRadioGroupProps>`
   ${(props) =>
     props.inline &&
     css`
-      background: yellow;
-      // height: 100%;
+      height: 10rem;
       display: flex;
       align-items: center;
-      justify-content: space-around;
+      // justify-content: space-between;
       & > * {
-        // flex: 1;
-        display: inline;
+        margin-right: 3rem;
       }
+      font-size: 2rem;
     `}
 `;
 
@@ -44,23 +43,25 @@ const FormRadioGroup: React.FC<RadioGroupProps> = ({
 }) => {
   return (
     <div>
-      <Label>{label}</Label>
-      <StyledFormRadioGroup inline={inline}>
-        {options.map((option, index) => (
-          <div key={option.value + index}>
-            <label>
-              <Field
-                type="radio"
-                name={name}
-                value={option.value}
-                style={{ marginRight: 10 }}
-              />
-              {option.label}
-            </label>
-          </div>
-        ))}
-        <ErrorMessage name={name} />
-      </StyledFormRadioGroup>
+      <Label>
+        {label}
+        <StyledFormRadioGroup inline={inline}>
+          {options.map((option, index) => (
+            <div key={option.value + index}>
+              <label>
+                <Field
+                  type="radio"
+                  name={name}
+                  value={option.value}
+                  style={{ marginRight: 10 }}
+                />
+                {option.label}
+              </label>
+            </div>
+          ))}
+          <ErrorMessage name={name} />
+        </StyledFormRadioGroup>
+      </Label>
     </div>
   );
 };

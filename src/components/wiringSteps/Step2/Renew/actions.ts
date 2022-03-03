@@ -9,45 +9,11 @@ import useCurrentStepUpdater from "../../../../hooks/useCurrentStepUpdater";
 
 export default function useActions() {
   useCurrentStepUpdater(1);
-  const domainOptions = [
-    {
-      value: "domestic",
-      label: "Domestic",
-    },
-    {
-      value: "industrial",
-      label: "Industrial",
-    },
-    {
-      value: "commercial",
-      label: "Commercial",
-    },
-    {
-      value: "inspector",
-      label: "Inspector",
-    },
-  ];
 
   const { stepStore } = useRootStore();
   const navigate = useNavigate();
 
-  const [licenseTypes, setLicenseTypes] = React.useState<ISelectOption[]>([]);
-
   const ref = React.useRef(null);
-
-  // const updateLicenseTypes = (e: Event) => {
-  //   const registerType = (e.target as HTMLInputElement).value;
-  //   const selectedRegister = registerOptions.find(
-  //     (option) => option.value === registerType
-  //   );
-  //   const licenseTypesOptions = selectedRegister?.licenseTypes.map(
-  //     (licenseType) => ({
-  //       value: licenseType,
-  //       label: licenseType.replaceAll("_", " "),
-  //     })
-  //   );
-  //   setLicenseTypes(licenseTypesOptions || []);
-  // };
 
   const handleStepChange = (direction: number) => {
     const newStepId = stepStore.currentStep?.id! + direction;
@@ -61,79 +27,55 @@ export default function useActions() {
     navigate(`/${stepStore.applicationType}/${newStepId}`);
   };
 
-  const fetchLicense = (licenseFormDetails: ILicenseFormDetails) => {
-    const {
-      registerType,
-      licenseType,
-      license: licenseNumber,
-    } = licenseFormDetails;
-    return api.get(
-      `/renew/${registerType}?licenseType=${licenseType}&licenseNumber=${licenseNumber}`
-    );
-  };
-
-  const handleSearchLicense = async (
-    licenseFormDetails: ILicenseFormDetails
-  ) => {
-    const response = await fetchLicense(licenseFormDetails);
-
+  const handleCreatePaymentIntent = async (values: any) => {
+    const response = await api.post("/wiring/renew", { values });
     if (!response.ok) {
-      if (response.status === 404) {
-        //@ts-ignore
-        throw new Error(response.data.message);
-      } else {
-        throw new Error("Something went wrong, Please try again!");
-      }
+      //@ts-ignore
+      throw new Error(response.data.message);
     }
 
-    const { name, email, phone, license, cost } = response.data as {
-      name: string;
-      email: string;
-      phone: string;
-      license: string;
-      cost: number;
-    };
-    stepStore.setBillingDetails({
-      registerType: licenseFormDetails.registerType,
-      years: licenseFormDetails.years,
-      licenseType: licenseFormDetails.licenseType,
-      license,
-      name,
-      email,
-      phone,
-      cost,
-    });
-    const currentStep = stepStore.steps[2];
-    currentStep.completed = true;
-    stepStore.setCurrentStep(currentStep);
-    navigate(`/${stepStore.applicationType}/${currentStep.id}`);
+    setTimeout(() => {
+      //@ts-ignore
+      window.location = response.data.checkout_url;
+    }, 3000);
+
+    // const currentStep = stepStore.steps[2];
+    // currentStep.completed = true;
+    // stepStore.setCurrentStep(currentStep);
+    // navigate(`/${stepStore.applicationType}/${currentStep.id}`);
     return true;
   };
 
   const handleSubmit = async (values: any) => {
-    return alert(JSON.stringify(values));
-    const myPromise = new Promise(async (resolve, reject) => {
+    const request = new Promise(async (resolve, reject) => {
       try {
-        await handleSearchLicense(values);
+        await handleCreatePaymentIntent(values);
         resolve("");
       } catch (error) {
         reject(error);
       }
     });
 
-    toast.promise(myPromise, {
-      loading: "Loading...",
-      success: "Success",
-      error: (er) => er.message,
-    });
+    await toast.promise(
+      request,
+      {
+        loading: "Loading...",
+        success: "You'll be redirected soon!",
+        error: (error) => error.message,
+      },
+      {
+        style: { minWidth: 250 },
+        success: {
+          duration: 3000,
+        },
+      }
+    );
+    return;
   };
 
   return {
     stepStore,
-    domainOptions,
-    licenseTypes,
     ref,
-    // updateLicenseTypes,
     handleStepChange,
     handleSubmit,
   };

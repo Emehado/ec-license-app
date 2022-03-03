@@ -96,6 +96,7 @@ export default function useActions() {
         //@ts-ignore
         throw new Error(response.data.message);
       } else {
+        console.log(response);
         throw new Error("Something went wrong, Please try again!");
       }
     }

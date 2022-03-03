@@ -3,14 +3,14 @@ import PageHeader from "../../../Header";
 import Card from "../../../Card";
 import useActions from "./actions";
 
-import { VALIDATION_SCHEMA, INITIAL_VALUES } from "./constants";
+import { VALIDATION_SCHEMA, INITIAL_VALUES, DOMAIN_OPTIONS } from "./constants";
 import "../styles.modules.css";
 import BottomNavigation from "../../../BottomNavigation";
 import Form, { FormField } from "../../../Form";
 import FormRadioGroup from "../../../Form/FormRadioGroup";
 
 const Renew = () => {
-  const { domainOptions, ref, handleStepChange, handleSubmit } = useActions();
+  const { ref, handleStepChange, handleSubmit } = useActions();
 
   return (
     <div>
@@ -86,7 +86,7 @@ const Renew = () => {
             A-3 RENEWAL FEE (this is to cover a subsidized cost of the ID card)
           </div>
 
-          <FormRadioGroup name="domain" options={domainOptions} />
+          <FormRadioGroup name="domain" options={DOMAIN_OPTIONS} />
 
           <button
             ref={ref}

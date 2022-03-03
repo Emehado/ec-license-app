@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
-const StyledLabel = styled.div`
+const StyledLabel = styled.label`
   font-size: 1.7rem;
-  //   margin-bottom: 2rem;
 `;
 
 export default StyledLabel;

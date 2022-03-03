@@ -43,19 +43,19 @@ const VALIDATION_SCHEMA = Yup.object({
   age: Yup.number().required().positive().integer().label("Age"),
   sex: Yup.string().oneOf(["male", "female"]).required().label("Sex"),
   nationality: Yup.string()
-    .oneOf(["Ghanaian", "Non-Ghanaian"])
+    .oneOf(["ghanaian", "non-Ghanaian"])
     .required()
     .label("Nationality"),
   nonGhanaianWorkPermit: Yup.string()
     .label("Work Permit")
     .when("nationality", {
-      is: "Non-Ghanaian",
+      is: "non-Ghanaian",
       then: Yup.string().required(),
       otherwise: Yup.string().nullable(true),
     }),
-  disability: Yup.string().oneOf(["Yes", "No"]).required().label("Disability"),
+  disability: Yup.string().oneOf(["yes", "no"]).required().label("Disability"),
   disabilityType: Yup.string().when("disability", {
-    is: "Yes",
+    is: "yes",
     then: Yup.string().min(1).max(256).required(),
     otherwise: Yup.string().nullable(true),
   }),
@@ -63,14 +63,17 @@ const VALIDATION_SCHEMA = Yup.object({
   area: Yup.string().min(1).max(256).required().label("Area"),
   town: Yup.string().min(1).max(256).required().label("Town"),
   region: Yup.string().min(1).max(256).required().label("Region"),
-  IDType: Yup.string().min(1).max(256).required().label("ID Type"),
+  IDType: Yup.string()
+    .oneOf(["Drivers ID", "Voters ID", "Drivers ID", "Passport", "National ID"])
+    .required()
+    .label("ID Type"),
   IDNumber: Yup.string().min(1).max(256).required().label("ID Number"),
   relativeSurname: Yup.string()
     .min(1)
     .max(256)
     .required()
     .label("Relative Surname"),
-  relativeFirstname: Yup.string()
+  relativeFirstName: Yup.string()
     .min(1)
     .max(256)
     .required()
@@ -80,7 +83,8 @@ const VALIDATION_SCHEMA = Yup.object({
     .max(15)
     .required()
     .label("Relative Telephone"),
-  takenExamsBefore: Yup.boolean()
+  takenExamsBefore: Yup.string()
+    .oneOf(["yes"])
     .required()
     .label("Have you taken exams before?"),
   upgradeOrFailed: Yup.string()
@@ -112,10 +116,36 @@ const SEX_OPTIONS = [
   { value: "female", label: "Female" },
 ];
 
+const NATIONALITY_OPTIONS = [
+  { value: "Ghanaian", label: "Ghanaian" },
+  { value: "Non-Ghanaian", label: "Non-Ghanaian" },
+];
+
+const DISABILITY_OPTIONS = [
+  { value: "yes", label: "Yes" },
+  { value: "no", label: "No" },
+];
+
+const ID_TYPE_OPTIONS = [
+  { value: "NHIS", label: "NHIS" },
+  { value: "Drivers ID", label: "Drivers ID" },
+  { value: "Voters ID", label: "Voters ID" },
+  { value: "Passport", label: "Passport" },
+  { value: "National ID", label: "National ID" },
+];
+const EXAMS_TAKEN_OPTIONS = [
+  { value: "upgrade", label: "Upgrade" },
+  { value: "failed", label: "Failed" },
+];
+
 export {
   INITIAL_VALUES,
   VALIDATION_SCHEMA,
   LICENSE_TYPES,
   EXAMINATION_CENTRES,
   SEX_OPTIONS,
+  NATIONALITY_OPTIONS,
+  DISABILITY_OPTIONS,
+  ID_TYPE_OPTIONS,
+  EXAMS_TAKEN_OPTIONS,
 };

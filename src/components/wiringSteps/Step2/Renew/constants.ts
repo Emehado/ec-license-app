@@ -21,4 +21,23 @@ const INITIAL_VALUES = {
   domain: "",
 };
 
-export { VALIDATION_SCHEMA, INITIAL_VALUES };
+const DOMAIN_OPTIONS = [
+  {
+    value: "domestic",
+    label: "Domestic",
+  },
+  {
+    value: "industrial",
+    label: "Industrial",
+  },
+  {
+    value: "commercial",
+    label: "Commercial",
+  },
+  {
+    value: "inspector",
+    label: "Inspector",
+  },
+];
+
+export { VALIDATION_SCHEMA, INITIAL_VALUES, DOMAIN_OPTIONS };
