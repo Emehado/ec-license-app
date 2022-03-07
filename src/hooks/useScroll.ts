@@ -2,6 +2,7 @@ import * as React from "react";
 
 export default function useActions() {
   const [scrollDir, setScrollDir] = React.useState("up");
+  const [scrollPos, setScrollPos] = React.useState(0);
   React.useEffect(() => {
     const threshold = 0;
     let lastScrollY = window.pageYOffset;
@@ -16,6 +17,7 @@ export default function useActions() {
       }
       setScrollDir(scrollY > lastScrollY ? "down" : "up");
       lastScrollY = scrollY > 0 ? scrollY : 0;
+      setScrollPos(lastScrollY);
       ticking = false;
     };
 
@@ -29,6 +31,6 @@ export default function useActions() {
     window.addEventListener("scroll", onScroll);
 
     return () => window.removeEventListener("scroll", onScroll);
-  }, [scrollDir]);
-  return { scrollDir, setScrollDir };
+  }, [scrollDir, scrollPos]);
+  return { scrollDir, setScrollDir, scrollPos };
 }

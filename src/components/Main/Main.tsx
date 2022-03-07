@@ -12,7 +12,7 @@ const StyledMain = styled.main<StyledMainProps>`
   height: 100%;
   width: 100%;
   padding: 4rem;
-  padding-top: ${(props) => (props.isMobile ? "35vh" : 0)};
+  padding-top: ${(props) => (props.isMobile ? "15vh" : 0)};
   background-color: ${(props) => props.theme.colors.background};
   @media (min-width: 1024px) {
     padding: 10rem 15rem;

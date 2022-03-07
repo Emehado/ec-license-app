@@ -8,28 +8,32 @@ import useActions from "./actions";
 
 interface StyledNavProps {
   position: string;
-  height: string;
+  height: string | number;
+  width: string;
 }
 interface NavProps {}
 
 const StyledNav = styled.div<StyledNavProps>`
   height: ${(props) => props.height};
-  transition: 0.1s;
-  width: 100%;
+  transition: 0.05s;
+  width: ${(props) => props.width};
   display: flex;
   justify-content: center;
   align-items: center;
   position: ${(props) => props.position};
+  & > * {
+    position: fixed;
+  }
   &::before {
     content: "";
-    position: absolute;
+    position: fixed;
     background-image: url(${backgroundImage});
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 100%;
-    width: 100%;
-    filter: grayscale(100%);
+    height: ${(props) => props.height};
+    width: ${(props) => props.width};
+    filter: hue-rotate(90deg);
     z-index: -1;
   }
   @media (min-width: 1024px) {
@@ -41,11 +45,12 @@ const StyledNav = styled.div<StyledNavProps>`
 `;
 
 const Nav: React.FC<NavProps> = () => {
-  const { stepStore, activeStep, navHeight, isDesktop } = useActions();
+  const { stepStore, activeStep, isDesktop } = useActions();
 
   return (
     <StyledNav
-      height={isDesktop ? "100%" : navHeight}
+      height={isDesktop ? "100vh" : "12vh"}
+      width={isDesktop ? "30vw" : "100%"}
       position={isDesktop ? "relative" : "fixed"}
     >
       <Stepper direction={isDesktop ? "vertical" : "horizontal"}>
