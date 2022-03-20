@@ -4,6 +4,8 @@ import useRootStore from "./useRootStore";
 export default function useActions(stepIndex: number) {
   const { stepStore } = useRootStore();
   React.useEffect(() => {
-    stepStore.setCurrentStep(stepStore.steps[stepIndex]);
-  }, []);
+    if (stepStore.steps.length) {
+      stepStore.setCurrentStep(stepStore.steps[stepIndex]);
+    }
+  }, [stepStore.steps.length]);
 }

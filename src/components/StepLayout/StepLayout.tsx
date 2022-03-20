@@ -28,7 +28,7 @@ const StepLayout: React.FC<StepLayoutProps> = ({ steps }) => {
     <StyledLayout>
       <Nav />
       <Main>
-        {<Outlet />}
+        <Outlet />
         <footer style={{ height: "10rem" }}></footer>
       </Main>
     </StyledLayout>

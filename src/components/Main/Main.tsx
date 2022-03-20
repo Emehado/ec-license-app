@@ -15,9 +15,9 @@ const StyledMain = styled.main<StyledMainProps>`
   padding-top: ${(props) => (props.isMobile ? "15vh" : 0)};
   background-color: ${(props) => props.theme.colors.background};
   @media (min-width: 1024px) {
-    padding: 10rem 15rem;
+    padding: 8rem;
   }
-  @media (min-width: 1224px) {
+  @media (min-width: 1624px) {
     padding: 10rem 20rem;
   }
 `;

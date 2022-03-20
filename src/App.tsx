@@ -13,6 +13,7 @@ import {
 
 import theme from "./config/theme";
 import NotFound from "./screens/NotFound";
+// import PaymentStatus from "./screens/PaymentStatus";
 import wiringRoute from "./routes/wiringRoute";
 import licenseApplicationRoute from "./routes/licenseApplicationRoute";
 
@@ -27,6 +28,7 @@ function App() {
               <Route path="/" element={<Outlet />}>
                 {licenseApplicationRoute()}
                 {wiringRoute()}
+                {/* <Route path="/payment-status/:id" element={<PaymentStatus />} /> */}
                 <Route path="*" element={<NotFound />} />
               </Route>
             </Routes>
