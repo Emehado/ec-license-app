@@ -1,11 +1,11 @@
-import * as React from "react";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { ISelectOption } from "../../../../types";
-import useRootStore from "../../../../hooks/useRootStore";
-import api from "../../../../api";
-import ILicenseFormDetails from "../../../../types/ILicenseFormDetails";
-import useCurrentStepUpdater from "../../../../hooks/useCurrentStepUpdater";
+import * as React from 'react';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { ISelectOption } from '../../../../types';
+import useRootStore from '../../../../hooks/useRootStore';
+import api from '../../../../api';
+import ILicenseFormDetails from '../../../../types/ILicenseFormDetails';
+import useCurrentStepUpdater from '../../../../hooks/useCurrentStepUpdater';
 
 export default function useActions() {
   useCurrentStepUpdater(1);
@@ -29,8 +29,9 @@ export default function useActions() {
 
   const handleCreatePaymentIntent = async (values: any) => {
     console.log(values);
-    const response = await api.post("/wiring/renew/payment-intent", values);
+    const response = await api.post('/wiring/renew/payment-intent', values);
     if (!response.ok) {
+      console.log(response.data);
       //@ts-ignore
       throw new Error(response.data.message);
     }
@@ -51,7 +52,7 @@ export default function useActions() {
     const request = new Promise(async (resolve, reject) => {
       try {
         await handleCreatePaymentIntent(values);
-        resolve("");
+        resolve('');
       } catch (error) {
         reject(error);
       }
@@ -60,7 +61,7 @@ export default function useActions() {
     await toast.promise(
       request,
       {
-        loading: "Loading...",
+        loading: 'Loading...',
         success: "You'll be redirected soon!",
         error: (error) => error.message,
       },
