@@ -1,10 +1,11 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+import { observer } from 'mobx-react-lite';
 
-import useCurrentStepUpdater from "../../hooks/useCurrentStepUpdater";
-import Card from "../../components/Card";
-import successImg from "../../assets/images/success.svg";
-import { observer } from "mobx-react-lite";
+import Card from '../../components/Card';
+import successImg from '../../assets/images/success.svg';
+import cancelImg from '../../assets/images/cancel.svg';
+import useActions from './actions';
 
 interface PaymentStatusProps {}
 
@@ -18,7 +19,7 @@ const StyledPaymentStatus = styled.div`
 
     @media (min-width: 1024px) {
       width: 380px;
-      height: 328px;
+      height: 228px;
     }
   }
   .a {
@@ -31,10 +32,17 @@ const StyledPaymentStatus = styled.div`
 
 const PaymentStatus: React.FC<PaymentStatusProps> = () => {
   // const { stepStore } = useRootStore();
-  const [paymentStatus, setPaymentStatus] = React.useState();
-  const [loading, setLoading] = React.useState(true);
-
-  useCurrentStepUpdater(2);
+  const { paymentStatusCode, loading } = useActions();
+  // 1 = Payment Approved
+  // 2 = Payment Failed
+  // 3 = No Payment Record
+  // 4 = Payment Pending
+  const statusCodeText = [
+    'Your payment has been processed successfully. You will receive a text message once your license has been renewed',
+    'Your payment has failed. Please try again.',
+    'No payment record found. Please try again.',
+    'Your payment is still pending.',
+  ];
 
   return (
     <StyledPaymentStatus>
@@ -45,12 +53,24 @@ const PaymentStatus: React.FC<PaymentStatusProps> = () => {
             <p>Please wait, we are verifying your payment!...</p>
           ) : (
             <>
-              <img className="img" src={successImg} alt="success" />
+              <img
+                className="img"
+                src={paymentStatusCode === 1 ? successImg : cancelImg}
+                alt="success"
+              />
               <strong>Payment Status</strong>
-              <p>
-                Your payment has been processed successfully. You will receive a
-                text message once your license has been renewed
-              </p>
+              {/* {paymentStatusCode !== 1 ? (
+                <p>
+                  Sorry, your payment has <strong>not</strong> been confirmed
+                  yet.
+                </p>
+              ) : (
+                <p>
+                  Your payment has been processed successfully. You will receive
+                  a text message once your license has been renewed
+                </p>
+              )} */}
+              <p>{statusCodeText[paymentStatusCode - 1]}</p>
             </>
           )}
         </Card>

@@ -31,6 +31,7 @@ export default function useActions() {
     console.log(values);
     const response = await api.post('/wiring/renew/payment-intent', values);
     if (!response.ok) {
+      console.log(response);
       console.log(response.data);
       //@ts-ignore
       throw new Error(response.data.message);
