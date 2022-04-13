@@ -1,13 +1,14 @@
-import React from "react";
-import Input from "../../Input";
-import { useFormikContext } from "formik";
-import ErrorMessage from "../ErrorMessage";
-import styled from "styled-components";
+import React from 'react';
+import Input from '../../Input';
+import { useFormikContext } from 'formik';
+import ErrorMessage from '../ErrorMessage';
+import styled from 'styled-components';
 
 interface InputProps {
   name: string;
   type: string;
   fullWidth?: boolean;
+  onChange?: (e: any) => void;
   [rest: string]: any;
 }
 
@@ -15,7 +16,13 @@ const StyledField = styled.div`
   margin-bottom: 1.5rem;
 `;
 
-const Field: React.FC<InputProps> = ({ name, type, fullWidth, ...rest }) => {
+const Field: React.FC<InputProps> = ({
+  name,
+  type,
+  onChange,
+  fullWidth,
+  ...rest
+}) => {
   const { values, handleChange, handleBlur } = useFormikContext();
   return (
     <StyledField>
@@ -26,7 +33,7 @@ const Field: React.FC<InputProps> = ({ name, type, fullWidth, ...rest }) => {
         onBlur={handleBlur}
         //@ts-ignore
         value={values[name]}
-        onChange={handleChange}
+        onChange={onChange || handleChange}
         {...rest}
       />
       <ErrorMessage name={name} />

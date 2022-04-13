@@ -28,13 +28,10 @@ export default function useActions() {
   };
 
   const handleCreatePaymentIntent = async (values: any) => {
-    console.log(values);
     const response = await api.post('/wiring/renew/payment-intent', values);
     if (!response.ok) {
-      console.log(response);
-      console.log(response.data);
       //@ts-ignore
-      throw new Error(response.data.message);
+      toast.error(response.data.message);
     }
 
     setTimeout(() => {
@@ -77,7 +74,6 @@ export default function useActions() {
   };
 
   return {
-    stepStore,
     ref,
     handleStepChange,
     handleSubmit,

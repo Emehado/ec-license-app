@@ -1,6 +1,7 @@
-import React from "react";
-import { Formik, Form } from "formik";
-import { FormField, FormSelect } from "../../../Form";
+import React from 'react';
+import { Formik, Form } from 'formik';
+import toast from 'react-hot-toast';
+import { FormField, FormSelect } from '../../../Form';
 import {
   INITIAL_VALUES,
   VALIDATION_SCHEMA,
@@ -11,11 +12,14 @@ import {
   DISABILITY_OPTIONS,
   ID_TYPE_OPTIONS,
   EXAMS_TAKEN_OPTIONS,
-} from "./constants";
-import useActions from "./actions";
-import styled from "styled-components";
-import Card from "../../../Card";
-import FormRadioGroup from "../../../Form/FormRadioGroup";
+} from './constants';
+import useActions from './actions';
+import styled from 'styled-components';
+import Card from '../../../Card';
+import FormRadioGroup from '../../../Form/FormRadioGroup';
+import BottomNavigation from '../../../BottomNavigation';
+import uploadImage from '../../../../api/cloudinaryClient/imageUpload';
+import ErrorMessage from '../../../Form/ErrorMessage';
 
 const StyledNewApplication = styled.div`
 .grid {
@@ -37,7 +41,7 @@ const StyledNewApplication = styled.div`
 `;
 
 const NewApplication = () => {
-  const { handleSubmit } = useActions();
+  const { ref, handleStepChange, handleSubmit } = useActions();
   return (
     <StyledNewApplication>
       <h2>
@@ -60,21 +64,42 @@ const NewApplication = () => {
           validationSchema={VALIDATION_SCHEMA}
           onSubmit={handleSubmit}
         >
-          {({ values }) => (
+          {({ values, errors, setFieldValue }) => (
             <Form>
               <FormField
+                name=""
                 label="Passport picture"
-                name="passportPic"
                 type="file"
+                onChange={(event) => {
+                  const handleImageUpload = async (files: any) => {
+                    const responses = await uploadImage(files);
+
+                    let responseOk = true;
+                    const images = responses.map((response) => {
+                      if (!response.ok) {
+                        toast.error('request failed');
+                        responseOk = false;
+                      }
+
+                      //@ts-ignore
+                      return response.data.secure_url;
+                    });
+                    if (!responseOk) return false;
+
+                    setFieldValue('passportPicture', images[0]);
+                  };
+                  handleImageUpload(event.currentTarget.files);
+                }}
                 fullWidth
               />
+              <ErrorMessage name="passportPicture" />
               <FormSelect
                 label="Select license type"
                 name="licenseType"
                 options={LICENSE_TYPES}
               />
               <FormSelect
-                name="license"
+                name="examinationCenter"
                 label="Select preferred examination center"
                 options={EXAMINATION_CENTRES}
               />
@@ -104,15 +129,15 @@ const NewApplication = () => {
                 <FormField
                   label="Date of Birth"
                   placeholder="Enter date of birth"
-                  name="dob"
-                  type="text"
+                  name="dateOfBirth"
+                  type="date"
                   fullWidth
                 />
                 <FormField
                   label="Age"
                   placeholder="Enter age"
                   name="age"
-                  type="text"
+                  type="number"
                   fullWidth
                 />
                 <FormRadioGroup
@@ -127,7 +152,7 @@ const NewApplication = () => {
                 label="Nationality"
                 options={NATIONALITY_OPTIONS}
               />
-              {values.nationality === "Non-Ghanaian" && (
+              {values.nationality === 'Non-Ghanaian' && (
                 <FormField
                   fullWidth
                   type="file"
@@ -142,7 +167,7 @@ const NewApplication = () => {
                   options={DISABILITY_OPTIONS}
                   inline
                 />
-                {values.disability === "yes" && (
+                {values.disability === 'yes' && (
                   <FormField
                     fullWidth
                     type="text"
@@ -227,23 +252,29 @@ const NewApplication = () => {
                   label="Have you taken the exams before?"
                   name="takenExamsBefore"
                   options={[
-                    { value: "yes", label: "Yes" },
-                    { value: "no", label: "No" },
+                    { value: 'yes', label: 'Yes' },
+                    { value: 'no', label: 'No' },
                   ]}
                   inline
                 />
-                {values.takenExamsBefore === "yes" && (
+                {values.takenExamsBefore === 'yes' && (
                   <FormRadioGroup
                     label="Why do you wish to retake the exams"
-                    name="upgradeOrFailed"
+                    name="isReturnApplicant"
                     options={EXAMS_TAKEN_OPTIONS}
                     inline
                   />
                 )}
               </div>
+              <button
+                ref={ref}
+                type="submit"
+                style={{ visibility: 'hidden' }}
+              ></button>
             </Form>
           )}
         </Formik>
+        <BottomNavigation onStepChange={handleStepChange} />
       </Card>
     </StyledNewApplication>
   );
