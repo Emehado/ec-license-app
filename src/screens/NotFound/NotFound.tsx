@@ -21,7 +21,7 @@ const NotFound = () => {
   return (
     <StyledNotfound>
       <img src={notfoundImage} alt="404, resource not found." />
-      <h1>Now what would you be looking for here?</h1>
+      <h1>Looks like you lost your way?</h1>
       <Link to="/">Head Back to Home</Link>
     </StyledNotfound>
   );
